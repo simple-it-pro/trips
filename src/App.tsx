@@ -29,6 +29,7 @@ function App() {
     try {
       // TODO: Заменить на реальный API запрос к бэкенду
       // Пока используем заглушку с тестовыми данными
+      console.log('Поиск мест с параметрами:', params)
       await new Promise(resolve => setTimeout(resolve, 1500))
 
       const mockResults: Place[] = [
