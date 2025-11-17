@@ -89,7 +89,7 @@ function ResultsList({ results }: ResultsListProps) {
 
       <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-gray-700">
-          <strong>💡 Как работает AI:</strong> Мы анализируем соотношение рейтинга и количества отзывов.
+          <strong>💡 Как работает наш сервис:</strong> Мы анализируем соотношение рейтинга и количества отзывов.
           Место с рейтингом 4.8 и 500 отзывами надёжнее, чем место с рейтингом 5.0, но всего 5 отзывами.
         </p>
       </div>
