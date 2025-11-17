@@ -1,160 +1,160 @@
-# 🗺️ Best places analyzer - Умный поиск мест
+# 🗺️ Best Places Analyzer
 
-Веб-приложение для поиска лучших мест на основе интеллектуального анализа отзывов и рейтингов.
+A web application for finding the best places based on intelligent review and rating analysis.
 
-## 🎯 Что это?
+## 🎯 What is it?
 
-Это приложение помогает найти лучшие места (кафе, рестораны, достопримечательности) рядом с вами. В отличие от обычных поисковиков, наш AI анализирует не только рейтинг, но и количество отзывов - так мы исключаем места с высоким рейтингом, но малым количеством отзывов.
+This application helps you find the best places (cafes, restaurants, attractions) near you. Unlike regular search engines, our service analyzes not only ratings but also the number of reviews - filtering out places with high ratings but few reviews.
 
-### Как это работает?
+### How does it work?
 
-1. **Вы вводите адрес** или используете свою геолокацию
-2. **Выбираете радиус** поиска (1-20 км)
-3. **Опционально устанавливаете** минимальный рейтинг
-4. **AI анализирует** все места в радиусе и выдаёт топ-3 самых надёжных варианта
+1. **Enter your address** or use your current location
+2. **Select search radius** (1-20 km)
+3. **Optionally set** minimum rating
+4. **Our service analyzes** all places within the radius and returns the top 3 most reliable options
 
-## 🚀 Быстрый старт
+## 🚀 Quick Start
 
-### Что нужно установить?
+### Prerequisites
 
-Перед началом убедитесь, что у вас установлен [Node.js](https://nodejs.org/) версии 18 или выше.
+Make sure you have [Node.js](https://nodejs.org/) version 18 or higher installed.
 
-### Установка зависимостей
+### Install Dependencies
 
-Откройте терминал (командную строку) в папке проекта и выполните:
+Open your terminal in the project folder and run:
 
 ```bash
 npm install
 ```
 
-Эта команда установит все необходимые библиотеки для работы приложения.
+This command will install all necessary libraries for the application.
 
-### Настройка подключения к бэкенду
+### Configure Backend Connection
 
-Создайте файл `.env` в корне проекта (скопируйте из `.env.example`):
+Create a `.env` file in the project root (copy from `.env.example`):
 
 ```bash
 cp .env.example .env
 ```
 
-Откройте `.env` и укажите URL вашего бэкенда:
+Open `.env` and specify your backend URL:
 
 ```env
 VITE_API_URL=https://your-backend-url.railway.app
 ```
 
-Если бэкенд запущен локально, используйте:
+If the backend is running locally, use:
 
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
-### Запуск приложения локально
+### Run the Application Locally
 
-После установки зависимостей и настройки `.env` запустите приложение:
+After installing dependencies and configuring `.env`, start the application:
 
 ```bash
 npm run dev
 ```
 
-Приложение откроется в браузере по адресу: [http://localhost:3000](http://localhost:3000)
+The application will open in your browser at: [http://localhost:3000](http://localhost:3000)
 
-## 📁 Структура проекта
+## 📁 Project Structure
 
 ```
 trips/
 ├── src/
 │   ├── api/
-│   │   └── search.ts        # API клиент для бэкенда
-│   ├── components/          # Компоненты интерфейса
-│   │   ├── SearchForm.tsx   # Форма поиска
-│   │   └── ResultsList.tsx  # Список результатов
-│   ├── App.tsx              # Главный компонент
-│   ├── main.tsx             # Точка входа
-│   └── index.css            # Стили
-├── public/                  # Статические файлы
-├── .env.example             # Пример файла с переменными окружения
-├── index.html               # HTML шаблон
-└── package.json             # Зависимости проекта
+│   │   └── search.ts        # Backend API client
+│   ├── components/          # UI components
+│   │   ├── SearchForm.tsx   # Search form
+│   │   └── ResultsList.tsx  # Results list
+│   ├── App.tsx              # Main component
+│   ├── main.tsx             # Entry point
+│   └── index.css            # Styles
+├── public/                  # Static files
+├── .env.example             # Environment variables example
+├── index.html               # HTML template
+└── package.json             # Project dependencies
 ```
 
-## 🛠️ Технологии
+## 🛠️ Technologies
 
-- **React** - библиотека для создания интерфейсов
-- **TypeScript** - типизированный JavaScript
-- **Vite** - быстрый сборщик проекта
-- **Tailwind CSS** - утилитарный CSS фреймворк
+- **React** - UI library
+- **TypeScript** - Typed JavaScript
+- **Vite** - Fast build tool
+- **Tailwind CSS** - Utility-first CSS framework
 
-## 📝 Скрипты
+## 📝 Scripts
 
-- `npm run dev` - Запуск в режиме разработки
-- `npm run build` - Сборка для продакшена
-- `npm run preview` - Просмотр собранного приложения
+- `npm run dev` - Run in development mode
+- `npm run build` - Build for production
+- `npm run preview` - Preview built application
 
-## 🔗 Интеграция с бэкендом
+## 🔗 Backend Integration
 
-Приложение подключено к бэкенд API для поиска мест. Бэкенд находится в отдельном репозитории `trips-be`.
+The application is connected to a backend API for place search. The backend is in a separate `trips-be` repository.
 
 ### API Endpoint
 
 **POST** `/api/search`
 
-**Запрос:**
+**Request:**
 ```json
 {
-  "location": "Москва, Красная площадь",
+  "location": "New York, Times Square",
   "radius": 5,
   "minRating": 4.0
 }
 ```
 
-**Ответ:**
+**Response:**
 ```json
 {
   "results": [
     {
       "id": "place_id_123",
-      "name": "Кафе Пушкинъ",
+      "name": "Cafe Pushkin",
       "rating": 4.8,
       "reviewCount": 523,
-      "address": "Тверской бульвар, 26А",
+      "address": "Tverskoy Boulevard, 26A",
       "confidence": 95
     }
   ]
 }
 ```
 
-### Переменные окружения
+### Environment Variables
 
-- `VITE_API_URL` - URL бэкенда (обязательно)
+- `VITE_API_URL` - Backend URL (required)
 
-## 🌐 Деплой
+## 🌐 Deployment
 
-### Vercel (рекомендуется)
+### Vercel (Recommended)
 
-1. Зарегистрируйтесь на [Vercel](https://vercel.com)
-2. Подключите GitHub репозиторий
-3. Vercel автоматически определит настройки
-4. **Важно!** Добавьте переменную окружения в Vercel:
-   - Перейдите в Settings → Environment Variables
-   - Добавьте `VITE_API_URL` с URL вашего бэкенда
-   - Пример: `https://trips-be-xxx.railway.app`
-5. Пересоберите проект (Deployments → Redeploy)
+1. Sign up at [Vercel](https://vercel.com)
+2. Connect your GitHub repository
+3. Vercel will automatically detect settings
+4. **Important!** Add environment variable in Vercel:
+   - Go to Settings → Environment Variables
+   - Add `VITE_API_URL` with your backend URL
+   - Example: `https://trips-be-xxx.railway.app`
+5. Rebuild the project (Deployments → Redeploy)
 
-### Другие платформы
+### Other Platforms
 
-- **Netlify** - аналогично Vercel
-- **GitHub Pages** - для статических сайтов
-- **Railway** - для полноценных приложений
+- **Netlify** - Similar to Vercel
+- **GitHub Pages** - For static sites
+- **Railway** - For full-stack applications
 
-## 🤝 Вклад в проект
+## 🤝 Contributing
 
-Этот проект находится в стадии MVP. Все предложения и улучшения приветствуются!
+This project is in MVP stage. All suggestions and improvements are welcome!
 
-## 📄 Лицензия
+## 📄 License
 
 MIT
 
 ---
 
-Сделано с ❤️ для путешественников
+Made with ❤️ for travelers

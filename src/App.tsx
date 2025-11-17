@@ -3,7 +3,7 @@ import SearchForm from './components/SearchForm'
 import ResultsList from './components/ResultsList'
 import { searchPlaces, type SearchParams, type Place } from './api/search'
 
-// Экспортируем типы для использования в других компонентах
+// Export types for use in other components
 export type { SearchParams, Place }
 
 function App() {
@@ -14,51 +14,57 @@ function App() {
   const handleSearch = async (params: SearchParams) => {
     setIsLoading(true)
     setError(null)
-    setResults([]) // Очищаем предыдущие результаты
+    setResults([]) // Clear previous results
 
     try {
-      console.log('Поиск мест с параметрами:', params)
+      console.log('Searching places with parameters:', params)
 
-      // Отправляем запрос к API бэкенда
+      // Send request to backend API
       const places = await searchPlaces(params)
 
       setResults(places)
 
-      // Если результатов нет, показываем сообщение
+      // If no results found, show message
       if (places.length === 0) {
-        setError('По вашему запросу ничего не найдено. Попробуйте изменить параметры поиска.')
+        setError('No places found matching your criteria. Try adjusting your search parameters.')
       }
     } catch (err) {
-      // Обрабатываем ошибки от API
+      // Handle API errors
       const errorMessage = err instanceof Error
         ? err.message
-        : 'Произошла ошибка при поиске. Проверьте подключение к интернету и попробуйте ещё раз.'
+        : 'An error occurred while searching. Please check your internet connection and try again.'
 
       setError(errorMessage)
-      console.error('Ошибка поиска:', err)
+      console.error('Search error:', err)
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 mb-3">
-            🗺️ Best places analyzer
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <div className="container mx-auto px-4 py-12 sm:py-16">
+        <header className="text-center mb-16 animate-fade-in">
+          <div className="inline-block mb-4">
+            <span className="text-6xl sm:text-7xl drop-shadow-lg">🗺️</span>
+          </div>
+          <h1 className="text-5xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mb-4 tracking-tight">
+            Best Places Analyzer
           </h1>
-          <p className="text-lg text-gray-600">
-            Умный поиск лучших мест на основе анализа отзывов
+          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto font-medium">
+            Discover the best places nearby with intelligent review analysis
           </p>
         </header>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <SearchForm onSearch={handleSearch} isLoading={isLoading} />
 
           {error && (
-            <div className="mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-              {error}
+            <div className="mt-8 p-5 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-xl shadow-lg backdrop-blur-sm animate-slide-in">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">⚠️</span>
+                <p className="flex-1 font-medium">{error}</p>
+              </div>
             </div>
           )}
 
