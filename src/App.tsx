@@ -1,21 +1,10 @@
 import { useState } from 'react'
 import SearchForm from './components/SearchForm'
 import ResultsList from './components/ResultsList'
+import { searchPlaces, type SearchParams, type Place } from './api/search'
 
-export interface SearchParams {
-  location: string
-  radius: number
-  minRating?: number
-}
-
-export interface Place {
-  id: string
-  name: string
-  rating: number
-  reviewCount: number
-  address: string
-  confidence: number
-}
+// Экспортируем типы для использования в других компонентах
+export type { SearchParams, Place }
 
 function App() {
   const [results, setResults] = useState<Place[]>([])
@@ -25,44 +14,28 @@ function App() {
   const handleSearch = async (params: SearchParams) => {
     setIsLoading(true)
     setError(null)
+    setResults([]) // Очищаем предыдущие результаты
 
     try {
-      // TODO: Заменить на реальный API запрос к бэкенду
-      // Пока используем заглушку с тестовыми данными
       console.log('Поиск мест с параметрами:', params)
-      await new Promise(resolve => setTimeout(resolve, 1500))
 
-      const mockResults: Place[] = [
-        {
-          id: '1',
-          name: 'Кафе "Уют"',
-          rating: 4.8,
-          reviewCount: 523,
-          address: 'ул. Пушкина, 15',
-          confidence: 95,
-        },
-        {
-          id: '2',
-          name: 'Ресторан "Панорама"',
-          rating: 4.7,
-          reviewCount: 412,
-          address: 'пр. Ленина, 42',
-          confidence: 87,
-        },
-        {
-          id: '3',
-          name: 'Пиццерия "Италия"',
-          rating: 4.6,
-          reviewCount: 301,
-          address: 'ул. Советская, 8',
-          confidence: 79,
-        },
-      ]
+      // Отправляем запрос к API бэкенда
+      const places = await searchPlaces(params)
 
-      setResults(mockResults)
+      setResults(places)
+
+      // Если результатов нет, показываем сообщение
+      if (places.length === 0) {
+        setError('По вашему запросу ничего не найдено. Попробуйте изменить параметры поиска.')
+      }
     } catch (err) {
-      setError('Произошла ошибка при поиске. Попробуйте ещё раз.')
-      console.error(err)
+      // Обрабатываем ошибки от API
+      const errorMessage = err instanceof Error
+        ? err.message
+        : 'Произошла ошибка при поиске. Проверьте подключение к интернету и попробуйте ещё раз.'
+
+      setError(errorMessage)
+      console.error('Ошибка поиска:', err)
     } finally {
       setIsLoading(false)
     }
